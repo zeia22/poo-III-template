@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
-import { TAccountDB, TUserDB } from './types'
+import { AccountDB, UserDB } from './types'
 import { User } from './models/User'
 import { Account } from './models/Account'
 import { UserDatabase } from './database/UserDatabase'
@@ -104,7 +104,7 @@ app.post("/users", async (req: Request, res: Response) => {
             new Date().toISOString()
         ) // yyyy-mm-ddThh:mm:sssZ
 
-        const newUserDB: TUserDB = {
+        const newUserDB: UserDB = {
             id: newUser.getId(),
             name: newUser.getName(),
             email: newUser.getEmail(),
@@ -133,7 +133,7 @@ app.post("/users", async (req: Request, res: Response) => {
 app.get("/accounts", async (req: Request, res: Response) => {
     try {
         const accountDatabase = new AccountDatabase()
-        const accountsDB: TAccountDB[] = await accountDatabase.findAccounts()
+        const accountsDB: AccountDB[] = await accountDatabase.findAccounts()
 
         const accounts = accountsDB.map((accountDB) => new Account(
             accountDB.id,
@@ -225,7 +225,7 @@ app.post("/accounts", async (req: Request, res: Response) => {
             new Date().toISOString()
         )
 
-        const newAccountDB: TAccountDB = {
+        const newAccountDB: AccountDB = {
             id: newAccount.getId(),
             balance: newAccount.getBalance(),
             owner_id: newAccount.getOwnerId(),

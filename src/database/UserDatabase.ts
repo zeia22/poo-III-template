@@ -1,4 +1,4 @@
-import { TUserDB } from "../types";
+import { UserDB } from "../types";
 import { BaseDatabase } from "./BaseDatabase";
 
 export class UserDatabase extends BaseDatabase {
@@ -8,13 +8,13 @@ export class UserDatabase extends BaseDatabase {
         let usersDB
 
         if (q) {
-            const result: TUserDB[] = await BaseDatabase
+            const result: UserDB[] = await BaseDatabase
                 .connection(UserDatabase.TABLE_USERS)
                 .where("name", "LIKE", `%${q}%`)
 
             usersDB = result
         } else {
-            const result: TUserDB[] = await BaseDatabase
+            const result: UserDB[] = await BaseDatabase
                 .connection(UserDatabase.TABLE_USERS)
 
             usersDB = result
@@ -24,14 +24,14 @@ export class UserDatabase extends BaseDatabase {
     }
 
     public async findUserById(id: string) {
-        const [ userDB ]: TUserDB[] | undefined[] = await BaseDatabase
+        const [ userDB ]: UserDB[] | undefined[] = await BaseDatabase
             .connection(UserDatabase.TABLE_USERS)
             .where({ id })
 
         return userDB
     }
 
-    public async insertUser(newUserDB: TUserDB) {
+    public async insertUser(newUserDB: UserDB) {
         await BaseDatabase
             .connection(UserDatabase.TABLE_USERS)
             .insert(newUserDB)
